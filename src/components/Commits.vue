@@ -1,51 +1,48 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-2">
+      <div class="col">
         <h1 class="heading">Latest Commits</h1>
       </div>
-      <div class="col-1 d-flex align-items-center">
-        <button type="button" class="btn btn-primary" v-on:click="reset">Reset</button>
-      </div>
-      <div class="col-9 d-flex align-items-center">
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-2">
         <button type="button" class="btn btn-primary" v-on:click="toggleCommits">{{ commitBtn }}</button>
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <input type="number" v-model="number">
-        <button type="button" class="btn btn-primary" v-on:click="showNumber">Show number</button>
+      <div class="col d-flex align-items-center">
+        <input style="width: 50px" type="number" v-model="number">
+        <button type="button" class="btn btn-primary ml-3" v-on:click="showNumber">Show number</button>
+        <button type="button" class="btn btn-primary ml-3" v-on:click="reset">Reset</button>
       </div>
     </div>
     <ul>
-      <template
-          v-for="{ html_url, sha, author, commit } in commits"
-          :key="html_url"
-      >
+      <template v-for="{ html_url, sha, author, commit } in commits" :key="html_url">
         <li>
           <div class="row mt-3">
             <div class="col">
               <span>
                 <a :href="html_url" target="_blank" class="commit">{{ sha.substring(0, 8) }}</a>
-            </span>
+              </span>
               By<i class="fa fa-fw fa-user"></i>
               <span class="font-weight-bold">
-              <a :href="author.html_url" target="_blank" class="author">{{ commit.author.name }}</a>
-            </span>
+                <a :href="author.html_url" target="_blank" class="author">{{ commit.author.name }}</a>
+              </span>
               at
               <span class="font-weight-bold">
-              {{ formatDate(commit.author.date) }}
-            </span>
+                {{ formatDate(commit.author.date) }}
+              </span>
             </div>
           </div>
           <div class="row mb-3">
             <div class="col">
               <span v-show="show" class="commit-message">
-              {{ commit.message }}
-            </span>
+                {{ commit.message }}
+              </span>
             </div>
           </div>
-          <hr/>
+          <hr />
         </li>
       </template>
     </ul>
@@ -66,7 +63,7 @@ export default {
   data: function () {
     return {
       API_URL:
-          "https://api.github.com/repos/vuejs/core/commits?per_page=10&sha=main",
+        "https://api.github.com/repos/vuejs/core/commits?per_page=10&sha=main",
       commits: null,
       tmpCommits: null,
       show: true,
@@ -115,7 +112,7 @@ export default {
       this.checkButton();
     },
     checkButton() {
-      this.show === true ? this.commitBtn = "Show Commit" : this.commitBtn = "Hide Commit";
+      this.show === true ? this.commitBtn = "Hide Commit" : this.commitBtn = "Show Commit";
     },
     showNumber() {
       let array = [];
